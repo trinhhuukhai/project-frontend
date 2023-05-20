@@ -7,10 +7,14 @@ import { postProduct } from '../../../../../redux/apis/productApi'
 function AddProduct() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector((state) => state.auth.login?.currentUser)
+
+    const userId = user?.id
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
+    const [in_price, setInPrice] = useState('');
+    const [out_price, setOutPrice] = useState('');
     const [brand, setBrand] = useState('');
     const [color, setColor] = useState('');
     const [inventory, setInventory] = useState('');
@@ -22,19 +26,21 @@ function AddProduct() {
     }, [])
     const category = useSelector((state) => state.category.categorys?.allCategory);
 
-    const convertedData = category.map(obj => ({ label: obj.id, value: obj.name }));
+    
+    const convertedData = Array.isArray(category) && category.map(obj => ({ label: obj.id, value: obj.name }));
 
-    // debugger
     const handlePost = (e) => {
         e.preventDefault();
         const newPro = {
             name,
             description,
-            price,
+            in_price,
+            out_price,
             brand,
             color,
             inventory,
             categoryId,
+            userId
         };
         const formData = new FormData();
         formData.append("productImage", productImage);
@@ -43,6 +49,7 @@ function AddProduct() {
         }
 
         postProduct(formData, newPro,dispatch, navigate);
+        debugger
     };
 
     return (
@@ -50,52 +57,52 @@ function AddProduct() {
             <div className='container'>
                 <div className='row'>
                     <div className='col-12'>
-                        <h2 className='text-center m-4'>Add Product</h2>
+                        <h2 className='text-center m-4'>Thêm mới sản phẩm</h2>
                         <form action="" method="post" onSubmit={handlePost} encType="multipart/form-data" >
                             <div className='mb-3'>
-                                <label htmlFor='Name' className='form-label'>Name</label>
+                                <label htmlFor='Name' className='form-label'>Tên sản phẩm</label>
                                 <input type={"text"} className="form-control" placeholder='Enter name' name='name' required onChange={(e) => setName(e.target.value)} />
                             </div>
                             <div className='mb-3'>
-                                <label htmlFor='Description' className='form-label'>Description</label>
+                                <label htmlFor='Description' className='form-label'>Mô tả sản phẩm</label>
                                 <input type={"text"} className="form-control" placeholder='Enter description' name='description' required onChange={(e) => setDescription(e.target.value)} />
                             </div>
                             <div className='mb-3'>
-                                <label htmlFor='Price' className='form-label'>Price</label>
-                                <input type={"number"} className="form-control" placeholder='Enter price' name='price' required onChange={(e) => setPrice(e.target.value)} />
+                                <label htmlFor='Price' className='form-label'>Giá nhập</label>
+                                <input type={"number"} className="form-control" placeholder='Enter price' name='price' required onChange={(e) => setInPrice(e.target.value)} />
                             </div>
                             <div className='mb-3'>
-                                <label htmlFor='Brand' className='form-label'>Brand</label>
+                                <label htmlFor='Price' className='form-label'>Giá bán</label>
+                                <input type={"number"} className="form-control" placeholder='Enter price' name='price' required onChange={(e) => setOutPrice(e.target.value)} />
+                            </div>
+                            <div className='mb-3'>
+                                <label htmlFor='Brand' className='form-label'>Hãng</label>
                                 <input type={"text"} className="form-control" placeholder='Enter brand' name='brand' required onChange={(e) => setBrand(e.target.value)} />
                             </div>
                             <div className='mb-3'>
-                                <label htmlFor='Color' className='form-label'>Color</label>
+                                <label htmlFor='Color' className='form-label'>Màu sắc</label>
                                 <input type={"text"} className="form-control" placeholder='Enter color' name='color' required onChange={(e) => setColor(e.target.value)} />
                             </div>
                             <div className='mb-3'>
-                                <label htmlFor='Inventory' className='form-label'>Inventory</label>
+                                <label htmlFor='Inventory' className='form-label'>Số lượng</label>
                                 <input type={"number"} className="form-control" placeholder='Enter inventory' name='inventory' required onChange={(e) => setInventory(e.target.value)} />
                             </div>
-                            {/* <div className='mb-3'>
-                                <label htmlFor='Category' className='form-label'>Category</label>
-                                <input type={"text"} className="form-control" placeholder='Enter category' name='categoryId' required onChange={(e) => setCategoryId(e.target.value)} />
-                            </div> */}
                             <div className="mb-3">
-                                <label htmlFor="disabledSelect" className="form-label">Disabled select menu</label>
+                                <label htmlFor="disabledSelect" className="form-label">Chọn danh mục sản phẩm</label>
                                 <select id="disabledSelect" className="form-select" name='categoryId' required onChange={(e) => setCategoryId(e.target.value)}>
 
-                                    {convertedData.map((option) => (
+                                    {Array.isArray(convertedData) && convertedData.map((option) => (
                                         <option value={option.label}>{option.value}</option>
                                     ))}
 
                                 </select>
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="formFileMultiple" className="form-label">Product Image</label>
-                                <input className="form-control" type="file" id="formFileMultiple" name='productImage' multiple onChange={(e) => setProductImage(e.target.files[0])} />
+                                <label htmlFor="formFileMultiple" className="form-label">Hình ảnh sản phẩm</label>
+                                <input className="form-control" type="file" id="formFileMultiple" name='productImage'required multiple onChange={(e) => setProductImage(e.target.files[0])} />
                             </div>
-                            <button type='submit' className='btn btn-primary'>Save</button>
-                            <Link to='/product' className='btn btn-outline-danger mx-2'>Cancel</Link>
+                            <button type='submit' className='btn btn-primary'>Lưu</button>
+                            <Link to='/product' className='btn btn-outline-danger mx-2'>Hủy</Link>
                         </form>
                     </div>
                 </div>

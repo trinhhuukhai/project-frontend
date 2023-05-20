@@ -6,34 +6,35 @@ import { deleteCustomer, gettAllCustomer } from '../../../../../redux/apis/custo
 
 function Category() {
 
+  // const id = localStorage.getItem("id")
+
   const category = useSelector((state) => state.category.categorys?.allCategory);
   const dispatch = useDispatch();
-  
+
   const deleteCat = async (id) => {
     await deleteCategory(id, dispatch);
     loadALl();
   };
-  
+
   const loadALl = async () => {
     await gettAllCategory(dispatch);
   };
-  
+
   useEffect(() => {
     loadALl();
   }, []);
 
   return (
     <main>
-      <Link to="/category/add"><span>Add Category</span></Link>
+      <Link to="/category/add"><span>Thêm danh mục sản phẩm</span></Link>
       <div className='conatiner'>
         <div className='py-4'>
           <table className="table border">
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Action</th>
+                <th scope="col">Tên danh mục</th>
+                <th scope="col">Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -42,11 +43,10 @@ function Category() {
                   <tr key={index}>
                     <th scope='row'>{index + 1}</th>
                     <td>{cat.name}</td>
-                    <td>{cat.description}</td>
                     <td>
-                      <button className='btn btn-primary mx-2'>View</button>
-                      <Link to={`/category/edit/${cat.id}`} className='btn btn-outline-primary mx-2'>Edit</Link>
-                      <button className='btn btn-danger mx-2' onClick={() =>{deleteCat(cat.id)}}>Delete</button>
+                      {/* <button className='btn btn-primary mx-2'>Xem chi tiết</button> */}
+                      <Link to={`/category/edit/${cat.id}`} className='btn btn-outline-primary mx-2'>Sửa thông tin</Link>
+                      <button className='btn btn-danger mx-2' onClick={() =>{deleteCat(cat.id)}}>Xóa</button>
                     </td>
                   </tr>
                 ))

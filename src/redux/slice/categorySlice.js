@@ -10,7 +10,9 @@ const categorySLice = createSlice({
             postCategory:false,
             editCategory:false,
             getIdCategory:null,
-            deleteCategory:false
+            deleteCategory:false,
+            getProductinCategory:null,
+
         },
     },
     reducers:{
@@ -70,6 +72,17 @@ const categorySLice = createSlice({
             state.categorys.isFetching = false
             state.categorys.error = true
         },
+        getProductCategoryStart:(state) =>{
+            state.categorys.isFetching = true
+        },
+        getProductCategorySuccess:(state, action) =>{
+            state.categorys.isFetching = false
+            state.categorys.getProductinCategory = action.payload
+        },
+        getProductCategoryFailed: (state) =>{
+            state.categorys.isFetching = false
+            state.categorys.error = true
+        },
 
     }
 })
@@ -89,7 +102,10 @@ export const{
     getIdCategoryFailed,
     deleteCategoryStart,
     deleteCategorySuccess,
-    deleteCategoryFailed
+    deleteCategoryFailed,
+    getProductCategoryStart,
+    getProductCategorySuccess,
+    getProductCategoryFailed
 } = categorySLice.actions;
 
 export default categorySLice.reducer

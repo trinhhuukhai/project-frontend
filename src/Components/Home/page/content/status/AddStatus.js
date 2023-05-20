@@ -23,14 +23,14 @@ function AddStatus() {
       <div className='container'>
         <div className='row'>
           <div className='col-12'>
-            <h2 className='text-center m-4'>Add Status</h2>
+            <h2 className='text-center m-4'>Thêm trạng thái đơn hàng</h2>
             <form action="" method="post" onSubmit={handldePost}>
               <div className='mb-3'>
-                <label htmlFor='name' className='form-label'>Method Ship</label>
+                <label htmlFor='name' className='form-label'>Trạng thái đơn hàng</label>
                 <input type={"text"} className="form-control" placeholder='Enter status' name='name' required onChange={(e) => setName(e.target.value)} />
               </div>
-              <button type='submit' className='btn btn-primary'>Save</button>
-              <Link to='/status' className='btn btn-outline-danger mx-2'>Cancel</Link>
+              <button type='submit' className='btn btn-primary'>Lưu</button>
+              <Link to='/status' className='btn btn-outline-danger mx-2'>Hủy</Link>
             </form>
           </div>
         </div>

@@ -1,10 +1,9 @@
 import axios from "axios"
-import { deleteCategoryFailed, deleteCategoryStart, deleteCategorySuccess, editCategoryFailed, editCategoryStart, editCategorySuccess, getCategoryFailed, getCategoryStart, getCategorySuccess, getIdCategoryFailed, getIdCategoryStart, getIdCategorySuccess, postCategoryFailed, postCategoryStart, postCategorySuccess } from "../slice/categorySlice"
+import { deleteCategoryFailed, deleteCategoryStart, deleteCategorySuccess, editCategoryFailed, editCategoryStart, editCategorySuccess, getCategoryFailed, getCategoryStart, getCategorySuccess, getIdCategoryFailed, getIdCategoryStart, getIdCategorySuccess, getProductCategoryFailed, getProductCategoryStart, getProductCategorySuccess, postCategoryFailed, postCategoryStart, postCategorySuccess } from "../slice/categorySlice"
 export const gettAllCategory = async (dispatch) => {
     dispatch(getCategoryStart())
-
     try {
-        const res = await axios.get("http://localhost:8080/api/v1/category/getAllCategory")
+        const res = await axios.get(`http://localhost:8080/api/v1/category/getAllCategory`)
         dispatch(getCategorySuccess(res.data))
     } catch (error) {
         dispatch(getCategoryFailed())
@@ -30,6 +29,7 @@ export const editCategory = async (id,category, dispatch, navigate) => {
         const res = await axios.put(`http://localhost:8080/api/v1/category/${id}`, category)
 
         dispatch(editCategorySuccess(res.data))
+        
         navigate("/category")
     } catch (error) {
         dispatch(editCategoryFailed())
@@ -43,6 +43,16 @@ export const getIdCategory = async (id,dispatch) => {
         dispatch(getIdCategorySuccess(res.data))
     } catch (error) {
         dispatch(getIdCategoryFailed())
+    }
+}
+
+export const getProductCategory = async (id,dispatch) => {
+    dispatch(getProductCategoryStart())
+    try {
+        const res = await axios.get(`http://localhost:8080/api/v1/category/${id}/product`)
+        dispatch(getProductCategorySuccess(res.data))
+    } catch (error) {
+        dispatch(getProductCategoryFailed())
     }
 }
 

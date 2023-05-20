@@ -44,14 +44,14 @@ function EditStatus() {
             <div className='container'>
                 <div className='row'>
                     <div className='col-12'>
-                        <h2 className='text-center m-4'>Edit Shipping</h2>
+                        <h2 className='text-center m-4'>Sửa trạng thái đơn hàng</h2>
                         <form action="" method="post" onSubmit={(e) => handlePost(e)}>
                             <div className='mb-3'>
-                                <label htmlFor='name' className='form-label'>Status</label>
+                                <label htmlFor='name' className='form-label'>Trạng thái đơn hàng</label>
                                 <input type={"text"} className="form-control" placeholder='Enter status' name='name' required value={name} onChange={(e) => onInputChange(e)} />
                             </div>
-                            <button type='submit' className='btn btn-primary'>Save</button>
-                            <Link to='/status' className='btn btn-outline-danger mx-2'>Cancel</Link>
+                            <button type='submit' className='btn btn-primary'>Lưu</button>
+                            <Link to='/status' className='btn btn-outline-danger mx-2'>Hủy</Link>
                         </form>
                     </div>
                 </div>

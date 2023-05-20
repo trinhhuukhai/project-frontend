@@ -22,15 +22,15 @@ function Status() {
 
   return (
     <main>
-      <Link to="/status/add"><span>Add Status order</span></Link>
+      <Link to="/status/add"><span>Thêm trạng thái đơn hàng</span></Link>
       <div className='conatiner'>
         <div className='py-4'>
           <table className="table border">
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
+                <th scope="col">Trạng thái đơn hàng</th>
+                <th scope="col">Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -40,9 +40,9 @@ function Status() {
                     <th scope='row'>{index + 1}</th>
                     <td>{sta.name}</td>
                     <td>
-                      <button className='btn btn-primary mx-2'>View</button>
-                      <Link to={`/shipping/edit/${sta.id}`} className='btn btn-outline-primary mx-2'>Edit</Link>
-                      <button className='btn btn-danger mx-2' onClick={() => { deleteCus(sta.id) }}>Delete</button>
+                      <button className='btn btn-primary mx-2'>Xem chi tiết</button>
+                      <Link to={`/status/edit/${sta.id}`} className='btn btn-outline-primary mx-2'>Sửa</Link>
+                      <button className='btn btn-danger mx-2' onClick={() => { deleteCus(sta.id) }}>Xóa</button>
 
                     </td>
                   </tr>

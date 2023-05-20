@@ -1,0 +1,21 @@
+.products{
+    margin: 20px auto;
+    width: 80%;
+    /* display: flex; */
+    justify-content: space-around;
+    /* flex-wrap: wrap; */
+    /* background-color: orange; */
+    border-radius: 5px;
+}
+
+.product-name{
+    text-transform: uppercase;
+    margin: 10px 0px;
+}
+
+.sp{
+    display: flex;
+    justify-content: space-around;
+}
+
+

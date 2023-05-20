@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 
 :root {
-    --main-color: #e9967a;
+    --main-color: #39c945;
     --color-dark: #1D2231;
     --text-gary: #8390A2;
 }
@@ -21,7 +21,7 @@
     left: 0;
     top: 0;
     height: 100%;
-    background: var(--main-color);
+    background: #39c945;
     z-index: 100;
     transition: width 300ms;
 }

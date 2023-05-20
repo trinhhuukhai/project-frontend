@@ -10,6 +10,8 @@ import paymentReducer from "./slice/paymentSlice"
 import statusReducer from "./slice/statusSlice"
 import reviewReducer from "./slice/reviewSlice"
 import orderReducer from "./slice/orderSlice"
+import staticReducer from "./slice/staticSlice"
+import cartReducer from "./slice/cartSlice"
 
 import {
     persistStore,
@@ -42,7 +44,8 @@ const rootReducer = combineReducers({
     payment: paymentReducer,
     status: statusReducer,
     review: reviewReducer,
-
+    static: staticReducer,
+    cart: cartReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

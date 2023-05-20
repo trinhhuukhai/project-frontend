@@ -13,7 +13,7 @@ function Header() {
     const token = user?.token
 
     const handleLogout =()=>{
-        logout(token,dispatch,navigate)
+        logout(dispatch,navigate)
     }
     // debugger
     return (
@@ -22,21 +22,21 @@ function Header() {
             <h2>
                 <label htmlFor="nav-toggle">
                     <span className="las la-bars"></span>
-                    Dashboard
+                    Trang quản trị
                 </label>
             </h2>
 
-            <div className="search-wrapper">
+            {/* <div className="search-wrapper">
                 <span className="las la-search"></span>
                 <input type="search" name="" id="" placeholder="Search here..." />
-            </div>
+            </div> */}
 
             <div className="user-wrapper">
                 <img src="" alt="" width="40px" height="40px" />
                 <div>
-                    <h4>Hi <span>{user?.username}</span></h4>
+                    <h4>Xin chào:  <span>{user?.username}</span></h4>
                     {/* <small>Super admin</small> */}
-                    <Link to="/logout" className='header-logout' onClick={handleLogout}>Logout</Link>
+                    <Link to="/logout" className='header-logout' onClick={handleLogout}>Đăng xuất</Link>
                 </div>
             </div>
         </header>

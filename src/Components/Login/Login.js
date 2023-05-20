@@ -10,6 +10,9 @@ function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const user = useSelector((state) => state.auth.login?.currentUser)
+    // debugger
+
     const handldeLogin = (e)=>{
         e.preventDefault()
         const newUser ={
@@ -21,20 +24,21 @@ function Login() {
 
     return (
         <div className="center">
-            <h1>Login</h1>
+            <h1>Đăng nhập</h1>
             <form action="" method="post" onSubmit={handldeLogin}>
                 <div className="txt-field">
-                    <input type="text" name="" id="" required onChange={(e) => setUsername(e.target.value)} />
+                    <input type="text" name="username" id="username" required onChange={(e) => setUsername(e.target.value)} />
                         <span></span>
-                        <label htmlFor="">Username</label>
+                        <label htmlFor="">Tên đăng nhập</label>
                 </div>
                 <div className="txt-field">
-                    <input type="password" name="" id="" required onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" name="password" id="password" required onChange={(e) => setPassword(e.target.value)} />
                         <span></span>
-                        <label htmlFor="">Password</label>
+                        <label htmlFor="">Mật khẩu</label>
                 </div>
-               
+               {user && <p>{user.message}</p>}
                 <input type="submit" value="Login" />
+                <Link to="/register">Register</Link>
             </form>
         </div>
     )

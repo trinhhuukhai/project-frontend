@@ -1,46 +1,58 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { gettAllOrder } from '../../../../../redux/apis/orderApi';
+import { UpdateStatusOrder, gettAllOrder } from '../../../../../redux/apis/orderApi';
 import { deleteReview, gettAllReview } from '../../../../../redux/apis/reviewApi';
+import { convertMoney } from '../../../../../until/Validations';
+
 
 function Order() {
-  useEffect(() => {
-    loadALl();
-  }, []);
-  const order = useSelector((state) => state.order?.allOrder);
+
+  const shopId = useSelector((state) => state.auth.login?.currentUser.shopId);
+
+
+
+  const order = useSelector((state) => state.order?.allOrder.data);
   // debugger
+  const id = localStorage.getItem("id")
 
   const dispatch = useDispatch()
 
-
+  useEffect(() => {
+    loadALl();
+  }, []);
   const deleteCus = async (id) => {
     await deleteReview(id, dispatch);
     loadALl();
   };
 
   const loadALl = async () => {
-    await gettAllOrder(dispatch)
+    await gettAllOrder(shopId, dispatch)
   };
 
-
+  const updateStatus = async (Oid) => {
+    await UpdateStatusOrder(Oid, dispatch)
+    loadALl()
+  }
 
   return (
     <main>
-      <Link to="/review/add"><p>Add Review</p></Link>
       <div className='conatiner'>
         <div className='py-4'>
           <table className="table border">
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Customer Name</th>
-                <th scope="col">Order status</th>
-                <th scope="col">Payment method</th>
-                <th scope="col">Order date</th>
-                <th scope="col">Shipping method</th>
-                <th scope="col">Address</th>
-                <th scope="col">Action</th>
+                <th scope="col">Tên khách hàng</th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">Email</th>
+                <th scope="col">Địa chỉ</th>
+                <th scope="col">Ngày đặt hàng</th>
+
+                <th scope="col">Tổng tiền</th>
+                <th scope="col">Trạng thái đơn hàng</th>
+                <th scope="col">Thanh toán</th>
+                <th scope="col">Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -48,18 +60,30 @@ function Order() {
                 Array.isArray(order) && order.map((rev, index) => (
                   <tr key={index}>
                     <th scope='row'>{index + 1}</th>
-                    <td>{rev.customer.name}</td>
-                    <td>{rev.orderStatus.name}</td>
-                    <td>{rev.payment.paymentMethod}</td>
+                    <td>{rev.order.user.name}</td>
+                    <td>{rev.order.user.phone}</td>
+                    <td>{rev.order.user.email}</td>
+                    <td>{rev.order.user.address}</td>
                     <td>{rev.orderDate}</td>
-                    <td>{rev.shipping.shippingMethod}</td>
-                    <td>{rev.shipping.shippingAddress}</td>
-                    <td>
-                      <Link to={`/order/orderItem/${rev.id}`} className='btn btn-outline-primary mx-2'>View detail</Link>
-                      <Link to={`/review/edit/${rev.id}`} className='btn btn-outline-primary mx-2'>Edit</Link>
-                      <button className='btn btn-danger mx-2' onClick={() => { deleteCus(rev.id) }}>Delete</button>
 
-                    </td>
+                    <td>{rev.total} VND</td>
+                    <td>{rev.status}</td>
+                    <td>{rev.paymentStatus}</td>
+                    <td>
+                      <Link to={`/order/${rev.id}/orderItem`} className='btn btn-outline-primary mx-2'>Xem chi tiết đơn hàng</Link>
+                      {rev.status === "Đang xử lý" ? (
+                        // If rev.status is "Đã xác nhận", disable the button
+                        <button className='btn' >
+                          Xác nhận đơn hàng
+                        </button>
+                      ) : (
+                        // If rev.status is not "Đã xác nhận", enable the button and call the updateStatus function on click
+                        <button className='btn btn-outline-primary mx-2'
+                          disabled={rev.paymentStatus == 'Hoàn tiền' || rev.paymentStatus == "Chưa thanh toán" || rev.status == "Đã xác nhận" ? true : false}
+                          onClick={() => updateStatus(rev.id)}>
+                          Hoàn tiền
+                        </button>
+                      )}                    </td>
                   </tr>
                 ))
               }

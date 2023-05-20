@@ -19,7 +19,8 @@ function AddReview() {
         gettAllProduct(dispatch)
     }, [])
 
-    const product = useSelector((state) => state.product.products?.allProduct.response);
+    const product = useSelector((state) => state.product.products?.allProduct.data);
+    // debugger
     const convertedData = Array.isArray(product) && product.map(obj => ({ label: obj.id, value: obj.name }));
 
     // debugger
@@ -39,22 +40,22 @@ function AddReview() {
             <div className='container'>
                 <div className='row'>
                     <div className='col-12'>
-                        <h2 className='text-center m-4'>Add Review</h2>
+                        <h2 className='text-center m-4'>Thêm mới nhận xét</h2>
                         <form action="" method="post" onSubmit={handlePost} >
                             <div className='mb-3'>
-                                <label htmlFor='content' className='form-label'>Content</label>
+                                <label htmlFor='content' className='form-label'>Nội dung</label>
                                 <input type={"text"} className="form-control" placeholder='Enter review' name='content' required onChange={(e) => setContent(e.target.value)} />
                             </div>
                             <div className='mb-3'>
-                                <label htmlFor='customerName' className='form-label'>Name customer</label>
+                                <label htmlFor='customerName' className='form-label'>Tên khách hàng</label>
                                 <input type={"text"} className="form-control" placeholder='Enter customer Name' name='customerName' required onChange={(e) => setCustomerName(e.target.value)} />
                             </div>
                             <div className='mb-3'>
-                                <label htmlFor='rating' className='form-label'>Rating</label>
+                                <label htmlFor='rating' className='form-label'>Đánh giá 1-5 *</label>
                                 <input type={"number"} className="form-control" placeholder='Enter rating' name='rating' required onChange={(e) => setRating(e.target.value)} />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="disabledSelect" className="form-label">Select product</label>
+                                <label htmlFor="disabledSelect" className="form-label">Chọn sản phẩm đánh giá</label>
                                 <select id="disabledSelect" className="form-select" name='productId' required onChange={(e) => setProductId(e.target.value)}>
                                     
                                     {Array.isArray(convertedData) && convertedData.map((option) => (
@@ -63,8 +64,8 @@ function AddReview() {
 
                                 </select>
                             </div>
-                            <button type='submit' className='btn btn-primary'>Save</button>
-                            <Link to='/review' className='btn btn-outline-danger mx-2'>Cancel</Link>
+                            <button type='submit' className='btn btn-primary'>Lưu</button>
+                            <Link to='/review' className='btn btn-outline-danger mx-2'>Hủy</Link>
                         </form>
                     </div>
                 </div>

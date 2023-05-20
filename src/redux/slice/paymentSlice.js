@@ -7,10 +7,7 @@ const paymentSlice = createSlice({
             allPayment:null,
             isFetching:false,
             error:false,
-            postPayment:false,
-            editPayment:false,
-            getIdPayment:null,
-            deletePayment:false
+            postPayment:null,
         },
     },
     reducers:{
@@ -36,41 +33,6 @@ const paymentSlice = createSlice({
             state.payments.isFetching = false
             state.payments.error = true
         },
-        editPaymentStart: (state) =>{
-            state.payments.isFetching = true
-        },
-        editPaymentSuccess: (state, action) =>{
-            state.payments.isFetching = false
-            state.payments.editPayment = action.payload
-        },
-        editPaymentFailed: (state) =>{
-            state.payments.isFetching = false
-            state.payments.error = true
-        },
-        getIdPaymentStart: (state) =>{
-            state.payments.isFetching = true
-        },
-        getIdPaymentSuccess: (state, action) =>{
-            state.payments.isFetching = false
-            state.payments.getIdPayment = action.payload
-        },
-        getIdPaymentFailed: (state) =>{
-            state.payments.isFetching = false
-            state.payments.error = true
-        },
-
-        deletePaymentStart: (state) =>{
-            state.payments.isFetching = true
-        },
-        deletePaymentSuccess: (state, action) =>{
-            state.payments.isFetching = false
-            state.payments.deletePayment = action.payload
-        },
-        deletePaymentFailed: (state) =>{
-            state.payments.isFetching = false
-            state.payments.error = true
-        },
-
     }
 })
 
