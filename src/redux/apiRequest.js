@@ -12,7 +12,7 @@ export const loginUser = async (user, dispatch, navigate) => {
         dispatch(loginSuccess(res.data))
 
         if (res.data.roleName === 'ADMIN') {
-
+            localStorage.setItem("token",res.data.token)
             navigate("/")
         } else {
             dispatch(loginFailed().payload)
@@ -50,6 +50,7 @@ export const logout = async (token, dispatch, navigate) => {
             }
         })
         dispatch(logOutSuccess(res.data))
+        localStorage.removeItem("token");
         navigate("/login")
     } catch (error) {
         dispatch(logOutFailed())
