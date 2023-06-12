@@ -57,6 +57,23 @@
     text-decoration: none;
 }
 
+a {
+    text-decoration: none;
+    color: #000;
+    /* Set your desired text color */
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    /* Define your desired styles for the <p> element */
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 .sidebar-menu a.active {
     background: #fff;
     padding-top: 1rem;
@@ -223,6 +240,9 @@ main {
     background: #fff;
     border-radius: 5px;
 }
+main a{
+    text-decoration: none;
+}
 
 .card-header,
 .card-body {
@@ -361,21 +381,22 @@ tr td:last-child {
         width: calc(100% - 70px);
         left: 70px;
     }
-    .cards{
-        grid-template-columns:repeat (3, 1fr);
+
+    .cards {
+        grid-template-columns: repeat (3, 1fr);
     }
 
-    .recent-grid{
+    .recent-grid {
         grid-template-columns: 50% 50%;
     }
 }
+
 @media (max-width: 960px) {
-    .cards{
+    .cards {
         grid-template-columns: 50% 50%;
     }
 
-    .recent-grid{
+    .recent-grid {
         grid-template-columns: 50% 50%;
     }
 }
-

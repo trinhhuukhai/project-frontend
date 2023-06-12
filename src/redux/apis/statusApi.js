@@ -6,7 +6,7 @@ export const gettAllStatus = async (dispatch) => {
     dispatch(getStatusStart())
 
     try {
-        const res = await axios.get("http://localhost:8080/api/v1/order_status/getAllStatus")
+        const res = await axios.get("http://192.168.43.199:8443/api/v1/order_status/getAllStatus")
         dispatch(getStatusSuccess(res.data))
     } catch (error) {
         dispatch(getStatusFailed())
@@ -16,7 +16,7 @@ export const gettAllStatus = async (dispatch) => {
 export const postStatus = async (Status, dispatch, navigate) => {
     dispatch(postStatusStart())
     try {
-        const res = await axios.post("http://localhost:8080/api/v1/order_status/insert", Status)
+        const res = await axios.post("http://192.168.43.199:8443/api/v1/order_status/insert", Status)
 
         dispatch(postStatusSuccess(res.data))
         navigate("/status")
@@ -31,7 +31,7 @@ export const postStatus = async (Status, dispatch, navigate) => {
 export const editStatus = async (id,Status, dispatch, navigate) => {
     dispatch(editStatusStart())
     try {
-        const res = await axios.put(`http://localhost:8080/api/v1/order_status/${id}`, Status)
+        const res = await axios.put(`http://192.168.43.199:8443/api/v1/order_status/${id}`, Status)
 
         dispatch(editStatusSuccess(res.data))
         navigate("/status")
@@ -46,7 +46,7 @@ export const editStatus = async (id,Status, dispatch, navigate) => {
 export const getIdStatus = async (id,dispatch) => {
     dispatch(getIdStatusStart())
     try {
-        const res = await axios.get(`http://localhost:8080/api/v1/order_status/${id}`)
+        const res = await axios.get(`http://192.168.43.199:8443/api/v1/order_status/${id}`)
 
         dispatch(getIdStatusSuccess(res.data))
 
@@ -58,7 +58,7 @@ export const getIdStatus = async (id,dispatch) => {
 export const deleteStatus = async (id,dispatch) => {
     dispatch(deleteStatusStart())
     try {
-        const res = await axios.delete(`http://localhost:8080/api/v1/order_status/${id}`)
+        const res = await axios.delete(`http://192.168.43.199:8443/api/v1/order_status/${id}`)
 
         dispatch(deleteStatusSuccess(res.data))
         gettAllStatus(dispatch)

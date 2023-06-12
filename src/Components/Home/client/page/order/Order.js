@@ -31,12 +31,12 @@ function Order() {
     const handldePost = async (id) => {
         // e.preventDefault();
         const newPay = {
-          orderId: id
+            orderId: id
         }
         await postPayment(newPay, dispatch, navigate);
         getOrder()
-        
-      }
+
+    }
 
     return (
         <div className='container'>
@@ -51,8 +51,6 @@ function Order() {
                             <th scope="col">Số điện thoại</th>
                             <th scope="col">Trạng thái đơn hàng</th>
                             <th scope="col">Trạng thái thanh toán</th>
-                            <th scope="col">Giá trị đơn hàng</th>
-                            <th scope="col">Thuế</th>
                             <th scope="col">Tổng tiền</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -68,15 +66,16 @@ function Order() {
                                     <td>{rev.user.phone}</td>
                                     <td>{rev.status}</td>
                                     <td>{rev.paymentStatus}</td>
-                                    <td>{rev.total}</td>
-                                    <td>{rev.tax}</td>
-                                    <td>{rev.billInvoice} VND</td>
+                                    <td>{rev.total} VND</td>
                                     <td>
                                         <Link to={`/client/order/${rev.id}/orderDetails`} className='btn btn-outline-primary mx-2'>Xem chi tiết đơn hàng</Link>
 
                                     </td>
                                     <td>
-                                        <Link to={`/client/order/${rev.id}/orderDetails`} className='btn btn-outline-primary mx-2' onClick={() => handldePost(rev.id)}>Thanh toán</Link>
+                                        <Link to={`/client/order/${rev.id}/orderDetails`}
+                                         className='btn btn-outline-primary mx-2'
+                                         disabled={rev.paymentStatus == 'Hoàn tiền' ? true : false}
+                                          onClick={() => handldePost(rev.id)}>Thanh toán</Link>
 
                                     </td>
                                 </tr>

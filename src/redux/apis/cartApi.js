@@ -7,7 +7,7 @@ import { deleteCartFailed, deleteCartStart, deleteCartSuccess, editCartFailed, e
 export const postCart = async (Data, dispatch) => {
     dispatch(postCartStart())
     try {
-        const res = await axios.post("http://localhost:8080/api/v1/cartItem/insert",Data)
+        const res = await axios.post("http://192.168.43.199:8443/api/v1/cartItem/insert",Data)
         // debugger
         alert(res.data.message)
         dispatch(postCartSuccess(res.data))
@@ -21,7 +21,7 @@ export const postCart = async (Data, dispatch) => {
 export const postOrder = async (Data, dispatch, navigate) => {
     dispatch(postOrderItemStart())
     try {
-        const res = await axios.post("http://localhost:8080/api/v1/orderItem/insertFromCart",Data)
+        const res = await axios.post("http://192.168.43.199:8443/api/v1/orderItem/insertFromCart",Data)
         alert(res.data.message)
         dispatch(postOrderItemSuccess(res.data))
         navigate("/client/payment")
@@ -34,7 +34,7 @@ export const postOrder = async (Data, dispatch, navigate) => {
 export const getCartByUser = async (uId, dispatch) => {
     dispatch(getCartStart())
     try {
-        const res = await axios.get(`http://localhost:8080/api/v1/cartItem/user/${uId}`)
+        const res = await axios.get(`http://192.168.43.199:8443/api/v1/cartItem/user/${uId}`)
         // debugger
         dispatch(getCartSuccess(res.data))
         // navigate("/payment")
@@ -46,7 +46,7 @@ export const getCartByUser = async (uId, dispatch) => {
 export const deleteCart= async (id,dispatch) => {
     dispatch(deleteCartStart())
     try {
-        const res = await axios.delete(`http://localhost:8080/api/v1/cartItem/${id}`)
+        const res = await axios.delete(`http://192.168.43.199:8443/api/v1/cartItem/${id}`)
         // debugger
         dispatch(deleteCartSuccess(res.data))
         // getCartByUser(id,dispatch)
@@ -59,8 +59,8 @@ export const deleteCart= async (id,dispatch) => {
 export const editCart= async (Data,id,dispatch) => {
     dispatch(editCartStart())
     try {
-        const res = await axios.put(`http://localhost:8080/api/v1/cartItem/${id}`, Data)
-        // debugger
+        const res = await axios.put(`http://192.168.43.199:8443/api/v1/cartItem/${id}`, Data)
+        
         alert(res.data.message)
         dispatch(editCartSuccess(res.data))
 

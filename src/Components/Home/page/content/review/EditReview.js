@@ -6,16 +6,15 @@ import { editProduct, getIdProduct, gettAllProduct, postProduct } from '../../..
 import { editReview, getIdReview, gettAllReview } from '../../../../../redux/apis/reviewApi';
 
 function EditReview() {
-
+    const { id } = useParams()
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [content, setContent] = useState('');
-    const [customerName, setCustomerName] = useState('');
-    const [rating, setRating] = useState('');
-    const [productId, setProductId] = useState('');
 
-    const { id } = useParams()
+   
+
+
 
     useEffect(() => {
         getIdReview(id, dispatch)
@@ -25,16 +24,10 @@ function EditReview() {
 
     const data = useSelector((state) => state.review?.getIdReview.data);
    
-    const product = useSelector((state) => state.product.products?.allProduct.response);
-   
-    const convertedData = Array.isArray(product) && product.map(obj => ({ label: obj.id, value: obj.name }));
 
     useEffect(() => {
         if (data) {
-            setContent(data.content)
-            setCustomerName(data.customerName)
-            setRating(data.rating)
-            setProductId(data.product.id)
+            setContent(data.content) 
         }
     }, [data])
 
@@ -43,12 +36,9 @@ function EditReview() {
         e.preventDefault();
         const newReview = {
             content,
-            customerName,
-            rating,
-            productId,
         };
         editReview(id, newReview, dispatch, navigate);
-        debugger
+        
     };
 
 
@@ -63,24 +53,6 @@ function EditReview() {
                             <div className='mb-3'>
                                 <label htmlFor='content' className='form-label'>Nội dung</label>
                                 <input type={"text"} className="form-control" placeholder='Enter content' value={content} name='content' required onChange={(e) => setContent(e.target.value)} />
-                            </div>
-                            <div className='mb-3'>
-                                <label htmlFor='customerName' className='form-label'>Tên khách hàng</label>
-                                <input type={"text"} className="form-control" placeholder='Enter customerName' value={customerName} name='customerName' required onChange={(e) => setCustomerName(e.target.value)} />
-                            </div>
-                            <div className='mb-3'>
-                                <label htmlFor='rating' className='form-label'>Đánh giá 1-5 *</label>
-                                <input type={"number"} className="form-control" placeholder='Enter rating' value={rating} name='rating' required onChange={(e) => setRating(e.target.value)} />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="disabledSelect" className="form-label">Chọn sản phẩm đánh giá</label>
-                                <select value={productId} id="disabledSelect" className="form-select" name='productId' required onChange={(e) => setProductId(e.target.value)}>
-
-                                    {convertedData.map((option) => (
-                                        <option value={option.label}>{option.value}</option>
-                                    ))}
-
-                                </select>
                             </div>
                             <button type='submit' className='btn btn-primary'>Lưu</button>
                             <Link to='/review' className='btn btn-outline-danger mx-2'>Hủy</Link>

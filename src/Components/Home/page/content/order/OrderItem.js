@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { getOrderItembyOderId } from '../../../../../redux/apis/orderApi';
+import { getOrderItemById, getOrderItembyOderId } from '../../../../../redux/apis/orderApi';
 
 function OrderItem() {
     const dispatch = useDispatch();
     const { id } = useParams();
-    const orderItem = useSelector((state) => state.order?.allOrderItem.data);
-    // debugger
-
-    const loadAll = async () => {
-        await getOrderItembyOderId(id, dispatch);
-    };
+    const orderItem = useSelector((state) => state.order?.allOrderItem);
+    const data = orderItem?.data;
+    
 
     useEffect(() => {
         loadAll();
     }, []);
 
+    const loadAll = async () => {
+        await getOrderItemById(id, dispatch);
+    };
 
-    if (!Array.isArray(orderItem.orderItemResponses)) {
-        return <div>No items.</div>;
-    }
+    const formattedAmount = (amount) => {
+        if (amount) {
+          return amount.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+          });
+        }
+        return '0 đ';
+      };
 
 
 
@@ -31,11 +37,12 @@ function OrderItem() {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+
                                 <th scope="col">Tên sản phẩm</th>
                                 <th scope="col">Giá</th>
-                                <th scope="col">Hãng</th>
                                 <th scope="col">Ảnh sản phẩm</th>
+                                <th scope="col">Màu sắc</th>
+                                <th scope="col">Size</th>
                                 <th scope="col">Số lượng</th>
                                 <th scope="col">Số tiền</th>
 
@@ -43,20 +50,21 @@ function OrderItem() {
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                Array.isArray(orderItem.orderItemResponses) && orderItem.orderItemResponses.map((pro, index) => (
-                                    <tr key={index}>
-                                        <th scope='row'>{index + 1}</th>
-                                        <td>{pro.productResponses.name}</td>
-                                        <td>{pro.productResponses.outputPrice} VND</td>
-                                        <td>{pro.productResponses.brand}</td>
-                                        <td><img alt='' src={pro.productResponses.productImage} style={{ width: '100px', height: '100px' }} /></td>
-                                        <td>{pro.quantity}</td>
-                                        <td>{pro.total} VND</td>
 
-                                    </tr>
-                                ))
-                            }
+                            <tr>
+
+                                <td>{data.product.name}</td>
+                                <td>{formattedAmount(data.price)}</td>
+                             
+                                <td><img alt='' src={data.product.productImage} style={{ width: '100px', height: '100px' }} /></td>    
+                                <td>{data.product.color}</td>
+                                <td>{data.size}</td>
+                                <td>{data.quantity}</td>
+                                <td>{formattedAmount(data.total)}</td>
+
+                            </tr>
+
+
                         </tbody>
                     </table>
                 </div>

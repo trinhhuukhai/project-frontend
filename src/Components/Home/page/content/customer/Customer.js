@@ -6,12 +6,16 @@ import { deleteCustomer, gettAllCustomer } from '../../../../../redux/apis/custo
 function Customer() {
 
   const shopId = useSelector((state) => state.auth.login?.currentUser.shopId);
-  
-  const customer = useSelector((state) => state.customer.customers?.allCustomer.data);
 
-  const id = localStorage.getItem("id")
+  const customer = useSelector((state) => state.customer?.allCustomer.data);
+
 
   const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    loadALl();
+  }, []);
 
   const deleteCus = async (id) => {
     await deleteCustomer(id, dispatch);
@@ -22,19 +26,19 @@ function Customer() {
     await gettAllCustomer(shopId, dispatch);
   };
 
-  useEffect(() => {
-    loadALl();
-  }, []);
+  if (customer == "") {
+    return <main><div>No data</div></main>
+  }
 
   return (
     <main>
-      {/* <Link to="/customer/add"><span>Add customer</span></Link> */}
+
       <div className='conatiner'>
         <div className='py-4'>
           <table className="table border">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">STT</th>
                 <th scope="col">Tên khách hàng</th>
                 <th scope="col">Email</th>
                 <th scope="col">Số điện thoại</th>
@@ -52,7 +56,7 @@ function Customer() {
                     <td>{cus.phone}</td>
                     <td>{cus.address}</td>
                     <td>
-                    
+
                       <button className='btn btn-danger mx-2' onClick={() => { deleteCus(cus.id) }}>Xóa</button>
 
                     </td>

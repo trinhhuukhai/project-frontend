@@ -24,9 +24,9 @@ function Header() {
             </div>
             <div className='header-links'>
                 <ul>
-                    <li><Link to={"/client/cart"} className="cart"><i className='fas fa-shopping-cart me-1' /> Cart</Link></li>
-                    <li><Link to={"/client/coin"} className="coin"><i className='fas fa-dollar-sign me-1' />{coin} Coin</Link></li>
-                    <li><Link to={"/client/order"} className="order"><i className="fa fa-shopping-bag" /> My Order</Link></li>
+                    <li><Link to={"/client/cart"} className="cart"><i className='fas fa-shopping-cart me-1' /> Giỏ hàng</Link></li>
+                    {/* <li><Link to={"/client/coin"} className="coin"><i className='fas fa-dollar-sign me-1' />{coin} Coin</Link></li> */}
+                    <li><Link to={"/client/order"} className="order"><i className="fa fa-shopping-bag" /> Đơn hàng</Link></li>
                     <li><Link to="/logout" className='header-logout' onClick={handleLogout}>Đăng xuất</Link></li>
 
                 </ul>

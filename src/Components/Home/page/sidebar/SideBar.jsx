@@ -36,7 +36,7 @@ function SideBar() {
                                 <Link
                                     to="/account"
                                     id="account"
-                                    className={location.pathname === '/' ? 'active' : ''}
+                                    className={ location.pathname.startsWith('/account') ? 'active' : ''}
                                     onClick={handleClick}
                                 >
                                     <span className="las la-users"></span><span>Tài khoản</span>
@@ -99,7 +99,7 @@ function SideBar() {
                                     className={location.pathname.startsWith('/static') ? 'active' : ''}
                                     onClick={handleClick}
                                 >
-                                    <span><i className="fas fal fa-chart-bar"></i></span><span>Thống kê</span>
+                                    <span><i className="fas fal fa-chart-bar"></i></span><span>Thống kê doanh thu</span>
                                 </Link>
                             </li>
                         </ul>

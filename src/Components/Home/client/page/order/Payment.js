@@ -29,8 +29,7 @@ function Payment() {
           <thead>
             <tr>
             
-              <th scope="col">Giá trị đơn hàng</th>
-              <th scope="col">Thuế</th>
+             
               <th scope="col">Tổng tiền</th>
               {/* <th scope="col">Giá trị đơn hàng</th> */}
               {/* <th scope="col">Thuế</th>
@@ -44,8 +43,7 @@ function Payment() {
                 <tr>
                  
                   <td>{order.total}</td>
-                  <td>{order.tax}</td>
-                  <td>{order.billInvoice}</td>
+                
                   {/* <td>{rev.order.tax}</td>
                   <td>{rev.order.billInvoice}</td> */}
                   <td>

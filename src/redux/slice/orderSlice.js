@@ -94,6 +94,17 @@ const orderSlice = createSlice({
         state.isFetching = false;
         state.error = true;
       },
+      getOrderItemByOidStart: (state) => {
+        state.isFetching = true;
+      },
+      getOrderItemByOidSuccess: (state, action) => {
+        state.isFetching = false;
+        state.orderItem = action.payload;
+      },
+      getOrderItemByOidFailed: (state) => {
+        state.isFetching = false;
+        state.error = true;
+      },
     },
   });
 
@@ -118,7 +129,10 @@ export const{
     getOrderItemFailed,
     getOrderByUserStart,
     getOrderByUserSuccess,
-    getOrderByUserFailed
+    getOrderByUserFailed,
+    getOrderItemByOidStart,
+    getOrderItemByOidSuccess,
+    getOrderItemByOidFailed
 } = orderSlice.actions;
 
 export default orderSlice.reducer

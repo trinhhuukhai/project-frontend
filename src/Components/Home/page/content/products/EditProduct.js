@@ -8,36 +8,43 @@ function EditProduct() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector((state) => state.auth.login?.currentUser)
+
+    const shopId = user?.shopId
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [in_price, setInputPrice] = useState('');
     const [out_price, setOutputPrice] = useState('');
-    const [brand, setBrand] = useState('');
+
     const [color, setColor] = useState('');
     const [inventory, setInventory] = useState('');
-    const [categoryId, setCategoryId] = useState('');
+
     const [productImage, setProductImage] = useState('');
 
 
     const handlePost = (e) => {
         e.preventDefault();
+
         const newPro = {
             name,
             description,
             in_price,
             out_price,
-            brand,
             color,
             inventory,
-            categoryId,
         };
+
         const formData = new FormData();
-        formData.append("productImage", productImage);
+
+        if (productImage !== '') {
+            formData.append("productImage", productImage);
+        }
+
         for (const key in newPro) {
             formData.append(key, newPro[key]);
         }
-        // debugger
+
         editProduct(id, formData, dispatch, navigate);
     };
 
@@ -59,10 +66,9 @@ function EditProduct() {
             setDescription(data.data.description)
             setInputPrice(data.data.inputPrice)
             setOutputPrice(data.data.outputPrice)
-            setBrand(data.data.brand)
             setColor(data.data.color)
             setInventory(data.data.inventory)
-            setCategoryId(data.data.category.id)
+
         }
     }, [data])
 
@@ -89,10 +95,10 @@ function EditProduct() {
                                 <label htmlFor='Price' className='form-label'>Giá bán</label>
                                 <input type={"text"} className="form-control" placeholder='Enter price' value={out_price} name='price' required onChange={(e) => setOutputPrice(e.target.value)} />
                             </div>
-                            <div className='mb-3'>
+                            {/* <div className='mb-3'>
                                 <label htmlFor='Brand' className='form-label'>Hãng</label>
                                 <input type={"text"} className="form-control" placeholder='Enter brand' value={brand} name='brand' required onChange={(e) => setBrand(e.target.value)} />
-                            </div>
+                            </div> */}
                             <div className='mb-3'>
                                 <label htmlFor='Color' className='form-label'>Màu sắc</label>
                                 <input type={"text"} className="form-control" placeholder='Enter color' value={color} name='color' required onChange={(e) => setColor(e.target.value)} />
@@ -101,7 +107,7 @@ function EditProduct() {
                                 <label htmlFor='Inventory' className='form-label'>Số lượng</label>
                                 <input type={"text"} className="form-control" placeholder='Enter inventory' value={inventory} name='inventory' required onChange={(e) => setInventory(e.target.value)} />
                             </div>
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                                 <label htmlFor="disabledSelect" className="form-label">Chọn danh mục sản phẩm</label>
                                 <select value={categoryId} id="disabledSelect" className="form-select" name='categoryId' required onChange={(e) => setCategoryId(e.target.value)}>
 
@@ -110,7 +116,7 @@ function EditProduct() {
                                     ))}
 
                                 </select>
-                            </div>
+                            </div> */}
                             <div className="mb-3">
                                 <label htmlFor="formFileMultiple" className="form-label">Hình ảnh sản phẩm</label>
                                 <input className="form-control" type="file" id="formFileMultiple" name='productImage' multiple onChange={(e) => setProductImage(e.target.files[0])} />

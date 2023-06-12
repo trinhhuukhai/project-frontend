@@ -32,11 +32,11 @@ function Header() {
             </div> */}
 
             <div className="user-wrapper">
-                <img src="" alt="" width="40px" height="40px" />
+                {/* <img src="" alt="" width="40px" height="40px" /> */}
                 <div>
                     <h4>Xin chào:  <span>{user?.username}</span></h4>
                     {/* <small>Super admin</small> */}
-                    <Link to="/logout" className='header-logout' onClick={handleLogout}>Đăng xuất</Link>
+                    <Link to="/logout" className='btn btn-success' onClick={handleLogout}>Đăng xuất</Link>
                 </div>
             </div>
         </header>

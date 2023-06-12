@@ -6,11 +6,12 @@ import { editCategory, getIdCategory } from '../../../../../redux/apis/categoryA
 function EditCategory() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
+  const user = useSelector((state) => state.auth.login?.currentUser)
+  const token = user?.token
   const { id } = useParams()
 
   useEffect(() => {
-    getIdCategory(id, dispatch)
+    getIdCategory(id,token, dispatch)
   }, [id, dispatch])
 
   const data = useSelector((state) => state.category.categorys?.getIdCategory.data)
@@ -31,7 +32,7 @@ function EditCategory() {
 
   const handlePost = (e) => {
     e.preventDefault()
-    editCategory(id, cat, dispatch, navigate)
+    editCategory(id, cat,token, dispatch, navigate)
     // debugger
   }
 
@@ -44,10 +45,10 @@ function EditCategory() {
             <form action="" method="post" onSubmit={(e) => handlePost(e)}>
               <div className='mb-3'>
                 <label htmlFor='Name' className='form-label'>Name</label>
-                <input type={"text"} className="form-control" placeholder='Enter name' name='name' required value={name} onChange={(e) => onInputChange(e)} />
+                <input type={"text"} className="form-control" placeholder='Tên danh mục' name='name' required value={name} onChange={(e) => onInputChange(e)} />
               </div>
-              <button type='submit' className='btn btn-primary'>Save</button>
-              <Link to='/category' className='btn btn-outline-danger mx-2'>Cancel</Link>
+              <button type='submit' className='btn btn-primary'>Lưu</button>
+              <Link to='/category' className='btn btn-outline-danger mx-2'>Hủy</Link>
             </form>
           </div>
         </div>

@@ -11,6 +11,7 @@ function AddCategory() {
   const user = useSelector((state) => state.auth.login?.currentUser)
 
   const id = user?.id
+  const token = user?.token
 
   const [name, setName] = useState("")
 
@@ -20,7 +21,7 @@ function AddCategory() {
       name: name,
       userId:id,
     }
-    postCategory(newCat, dispatch, navigate)
+    postCategory(newCat,token, dispatch, navigate)
   }
 
   return (
@@ -32,7 +33,7 @@ function AddCategory() {
             <form action="" method="post" onSubmit={handldePost}>
               <div className='mb-3'>
                 <label htmlFor='Name' className='form-label'>Tên danh mục</label>
-                <input type={"text"} className="form-control" placeholder='Enter name' name='name' required onChange={(e) => setName(e.target.value)} />
+                <input type={"text"} className="form-control" placeholder='Tên danh mục' name='name' required onChange={(e) => setName(e.target.value)} />
               </div>
               <button type='submit' className='btn btn-primary'>Lưu</button>
               <Link to='/category' className='btn btn-outline-danger mx-2'>Hủy</Link>

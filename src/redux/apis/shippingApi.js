@@ -6,7 +6,7 @@ export const gettAllShipping = async (dispatch) => {
     dispatch(getShippingStart())
 
     try {
-        const res = await axios.get("http://localhost:8080/api/v1/ship/getAllShip")
+        const res = await axios.get("http://192.168.43.199:8443/api/v1/ship/getAllShip")
         dispatch(getShippingSuccess(res.data))
     } catch (error) {
         dispatch(getShippingFailed())
@@ -16,7 +16,7 @@ export const gettAllShipping = async (dispatch) => {
 export const postShipping = async (shipping, dispatch, navigate) => {
     dispatch(postShippingStart())
     try {
-        const res = await axios.post("http://localhost:8080/api/v1/ship/insert", shipping)
+        const res = await axios.post("http://192.168.43.199:8443/api/v1/ship/insert", shipping)
 
         dispatch(postShippingSuccess(res.data))
         navigate("/shipping")
@@ -31,7 +31,7 @@ export const postShipping = async (shipping, dispatch, navigate) => {
 export const editShipping = async (id,shipping, dispatch, navigate) => {
     dispatch(editShippingStart())
     try {
-        const res = await axios.put(`http://localhost:8080/api/v1/ship/${id}`, shipping)
+        const res = await axios.put(`http://192.168.43.199:8443/api/v1/ship/${id}`, shipping)
 
         dispatch(editShippingSuccess(res.data))
         navigate("/shipping")
@@ -46,7 +46,7 @@ export const editShipping = async (id,shipping, dispatch, navigate) => {
 export const getIdShipping = async (id,dispatch) => {
     dispatch(getIdShippingStart())
     try {
-        const res = await axios.get(`http://localhost:8080/api/v1/ship/${id}`)
+        const res = await axios.get(`http://192.168.43.199:8443/api/v1/ship/${id}`)
 
         dispatch(getIdShippingSuccess(res.data))
 
@@ -58,7 +58,7 @@ export const getIdShipping = async (id,dispatch) => {
 export const deleteShipping = async (id,dispatch) => {
     dispatch(deleteShippingStart())
     try {
-        const res = await axios.delete(`http://localhost:8080/api/v1/ship/${id}`)
+        const res = await axios.delete(`http://192.168.43.199:8443/api/v1/ship/${id}`)
 
         dispatch(deleteShippingSuccess(res.data))
         gettAllShipping(dispatch)

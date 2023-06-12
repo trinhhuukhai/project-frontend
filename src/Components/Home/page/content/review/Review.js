@@ -33,7 +33,7 @@ function Review() {
           <table className="table border">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">STT</th>
                 <th scope="col">Tên khách hàng</th>
                 <th scope="col">1-5 *</th>
                 <th scope="col">Nội dung</th>

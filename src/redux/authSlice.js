@@ -9,7 +9,10 @@ const authSlice = createSlice({
             getInfo:null,
             error: false,
             register:null,
-            msg:""
+            msg:"",
+            getUserById:null,
+            editUser:null,
+            deleteUser:null
         },
     },
     reducers:{
@@ -63,7 +66,45 @@ const authSlice = createSlice({
         },
         getInfoStart:(state) =>{
             state.login.isFetching = true
-        }
+        },
+
+        getUserByIdSuccess:(state, action) =>{
+            state.login.isFetching = false
+            state.login.getUserById = action.payload
+            state.login.error = false
+        },
+        getUserByIdFailed:(state)=>{
+            state.login.isFetching = false
+            state.login.error = true
+        },
+        getUserByIdStart:(state) =>{
+            state.login.isFetching = true
+        },
+        editUserSuccess:(state, action) =>{
+            state.login.isFetching = false
+            state.login.editUser = action.payload
+            state.login.error = false
+        },
+        editUserFailed:(state)=>{
+            state.login.isFetching = false
+            state.login.error = true
+        },
+        editUserStart:(state) =>{
+            state.login.isFetching = true
+        },
+        deleteUserSuccess:(state, action) =>{
+            state.login.isFetching = false
+            state.login.deleteUser = action.payload
+            state.login.error = false
+        },
+        deleteUserFailed:(state)=>{
+            state.login.isFetching = false
+            state.login.error = true
+        },
+        deleteUserStart:(state) =>{
+            state.login.isFetching = true
+        },
+        
     }
 })
 
@@ -77,7 +118,10 @@ export const{
     registerStart,
     registerSuccess,
     registerFailed,
-    getInfoFailed,getInfoStart,getInfoSuccess
+    getInfoFailed,getInfoStart,getInfoSuccess,
+    getUserByIdStart, getUserByIdSuccess, getUserByIdFailed,
+    editUserStart,
+    editUserSuccess, editUserFailed,deleteUserFailed,deleteUserStart,deleteUserSuccess
 } = authSlice.actions
 
 export default authSlice.reducer

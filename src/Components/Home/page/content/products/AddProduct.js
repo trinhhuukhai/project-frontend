@@ -7,9 +7,9 @@ import { postProduct } from '../../../../../redux/apis/productApi'
 function AddProduct() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector((state) => state.auth.login?.currentUser)
+    const user = useSelector((state) => state.auth.login?.currentUser);
 
-    const userId = user?.id
+    const shopId = user?.shopId;
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -18,15 +18,16 @@ function AddProduct() {
     const [brand, setBrand] = useState('');
     const [color, setColor] = useState('');
     const [inventory, setInventory] = useState('');
-    const [categoryId, setCategoryId] = useState('');
+    const [categoryId, setCategoryId] = useState(0);
     const [productImage, setProductImage] = useState('');
+    const [sizes, setSizes] = useState([]); // State to store selected sizes
 
     useEffect(() => {
-        gettAllCategory(dispatch)
-    }, [])
+        gettAllCategory(dispatch);
+    }, []);
+
     const category = useSelector((state) => state.category.categorys?.allCategory);
 
-    
     const convertedData = Array.isArray(category) && category.map(obj => ({ label: obj.id, value: obj.name }));
 
     const handlePost = (e) => {
@@ -40,16 +41,30 @@ function AddProduct() {
             color,
             inventory,
             categoryId,
-            userId
+            shopId
         };
         const formData = new FormData();
         formData.append("productImage", productImage);
         for (const key in newPro) {
             formData.append(key, newPro[key]);
         }
+        // Append selected sizes to formData
+        sizes.forEach((size) => {
+            formData.append('size', size);
+        });
 
-        postProduct(formData, newPro,dispatch, navigate);
-        debugger
+        postProduct(formData, newPro, dispatch, navigate);
+       
+    };
+
+    // Handle checkbox selection
+    const handleSizeChange = (e) => {
+        const { value, checked } = e.target;
+        if (checked) {
+            setSizes((prevSizes) => [...prevSizes, value]);
+        } else {
+            setSizes((prevSizes) => prevSizes.filter((size) => size !== value));
+        }
     };
 
     return (
@@ -87,6 +102,28 @@ function AddProduct() {
                                 <label htmlFor='Inventory' className='form-label'>Số lượng</label>
                                 <input type={"number"} className="form-control" placeholder='Enter inventory' name='inventory' required onChange={(e) => setInventory(e.target.value)} />
                             </div>
+                            <div className='mb-3'>
+                                <label htmlFor='Sizes' className='form-label'>Kích thước</label>
+                                <div>
+                                    <label className='me-3'>
+                                        <input className='me-2' type='checkbox' value='S' onChange={handleSizeChange} />
+                                        S
+                                    </label>
+                                    <label className='me-3'>
+                                        <input className='me-2' type='checkbox' value='M' onChange={handleSizeChange} />
+                                        M
+                                    </label>
+                                    <label className='me-3'>
+                                        <input className='me-2' type='checkbox' value='L' onChange={handleSizeChange} />
+                                        L
+                                    </label>
+                                    <label className='me-3'>
+                                        <input className='me-2' type='checkbox' value='XL' onChange={handleSizeChange} />
+                                        XL
+                                    </label>
+                                    {/* Add more sizes as needed */}
+                                </div>
+                            </div>
                             <div className="mb-3">
                                 <label htmlFor="disabledSelect" className="form-label">Chọn danh mục sản phẩm</label>
                                 <select id="disabledSelect" className="form-select" name='categoryId' required onChange={(e) => setCategoryId(e.target.value)}>
@@ -99,7 +136,7 @@ function AddProduct() {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="formFileMultiple" className="form-label">Hình ảnh sản phẩm</label>
-                                <input className="form-control" type="file" id="formFileMultiple" name='productImage'required multiple onChange={(e) => setProductImage(e.target.files[0])} />
+                                <input className="form-control" type="file" id="formFileMultiple" name='productImage' required multiple onChange={(e) => setProductImage(e.target.files[0])} />
                             </div>
                             <button type='submit' className='btn btn-primary'>Lưu</button>
                             <Link to='/product' className='btn btn-outline-danger mx-2'>Hủy</Link>

@@ -82,7 +82,7 @@ function HomePage() {
             <div className="main-content">
                 <Header />
                 <Routes>
-                    <Route path="/" element={<MainPage />} />
+                    {/* <Route path="/" element={<MainPage />} /> */}
                     <Route path="/customer" element={<Customer />} />
                     <Route path="/customer/:id/order" element={<OrderOfCustomer />} />
                     <Route path="/customer/:id/orderDetail" element={<OrderDetailCustomer />} />
@@ -95,6 +95,8 @@ function HomePage() {
                     <Route path="/product" element={<Product />} />
                     <Route path="/product/detail/:id" element={<ProductDetail />} />
                     <Route path="/product/add-image/:id" element={<AddProductImage />} />
+                    <Route path="/product/add-review/:id" element={<AddReview />} />
+                    <Route path="/product/review/edit/:id" element={<EditReview />} />
                     <Route path="/product/add" element={<AddProduct />} />
                     <Route path="/product/edit/:id" element={<EditProduct />} />
                     <Route path="/account" element={<Account />} />

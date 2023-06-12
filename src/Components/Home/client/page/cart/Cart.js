@@ -1,36 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useNavigation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { deleteCart, editCart, getCartByUser, postOrder } from '../../../../../redux/apis/cartApi';
 import { convertMoney } from '../../../../../until/Validations';
-import { gettAllPayment } from '../../../../../redux/apis/paymentApi';
-import { gettAllShipping } from '../../../../../redux/apis/shippingApi';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userId = localStorage.getItem('id');
+  const dataCart = useSelector((state) => state.cart.carts?.allCart);
+  debugger
+  
+  
+  let total = 0;
+
+  dataCart.data != "" && dataCart.data.forEach(item => {
+    total += item.totalPrice;
+  });
 
 
   useEffect(() => {
     getCart(userId);
-    getPaymentandShip()
   }, []);
-
-  const getPaymentandShip = async () => {
-    await gettAllPayment(dispatch);
-  };
-  const payment = useSelector((state) => state.payment.payments?.allPayment);
-
-  const convertedPayment = payment?.map(obj => ({ label: obj.id, value: obj.paymentMethod }));
-  const [pay, setPay] = useState(convertedPayment.length > 0 ? convertedPayment[0].label : '');
-
 
   const getCart = async (userId) => {
     await getCartByUser(userId, dispatch);
   };
-  const DataCart = useSelector((state) => state.cart.carts?.allCart);
-  // debugger
+
   const btnDelete = async (id) => {
     await deleteCart(id, dispatch);
     getCart(userId);
@@ -48,25 +44,19 @@ const Cart = () => {
       await editCart({ newQuantity: updatedQuantity }, id, dispatch);
       setUpdatedQuantities({});
       getCart(userId);
-
     }
   };
 
+  const handlePost = async () => {
+    const newOrder = {
+      userId: userId,
+    };
+    await postOrder(newOrder, dispatch, navigate);
+  };
 
-  const handldePost = async () => {
-    // e.preventDefault();
-    const newSOrder = {
-      userId: userId
+     if (dataCart.data == "") {
+        return <div>Giỏ hàng trống</div>;
     }
-    await postOrder(newSOrder, dispatch, navigate);
-    // getCart(userId);
-  }
-
-
-
-  const disabled = pay === '' || DataCart.count === 0;
-  // debugger
-
 
   return (
     <div className="cart-container">
@@ -84,38 +74,27 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            {DataCart && Array.isArray(DataCart.productResponses) && // Check if DataCart is defined before accessing it
-              DataCart.productResponses.map((i, index) => (
+            {
+              Array.isArray(dataCart.data) && dataCart.data.map((item, index) => (
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>
-                  <td>{i.name}</td>
-                  <td>{i.outputPrice} VND</td>
+                  <td>{item.product.name}</td>
+                  <td>{item.price} VND</td>
                   <td>
                     <input
                       type="number"
                       min="1"
-                      value={updatedQuantities[i.cart_item_id] ?? i.quantity}
-                      onChange={(e) =>
-                        handleQuantityChange(i.cart_item_id, e.target.value)
-                      }
+                      value={updatedQuantities[item.id] ?? item.quantity}
+                      onChange={(e) => handleQuantityChange(item.id, e.target.value)}
                     />
-
                   </td>
-                  <td>{convertMoney(i.total)} VND</td>
+                  <td>{item.totalPrice} VND</td>
                   <td>
-                    <button
-                      className="btn btn-primary mx-2"
-                      onClick={() => handleUpdateClick(i.cart_item_id)}
-                    >
-                      Update Quantity
+                    <button className="btn btn-primary mx-2" onClick={() => handleUpdateClick(item.id)}>
+                      Cập nhập
                     </button>
-                    <button
-                      className="btn btn-danger mx-2"
-                      onClick={() => {
-                        btnDelete(i.cart_item_id);
-                      }}
-                    >
-                      Delete
+                    <button className="btn btn-danger mx-2" onClick={() => btnDelete(item.id)}>
+                      Xóa
                     </button>
                   </td>
                 </tr>
@@ -124,24 +103,16 @@ const Cart = () => {
           <tfoot>
             <tr>
               <td colSpan="4" className="text-end">
-                Total:
+                Tổng tiền:
               </td>
-              <td>{convertMoney(DataCart.total)} VND</td>
+              <td>{total} VND</td>
             </tr>
           </tfoot>
         </table>
-        {/* <form action="" method="post" onSubmit={handldePost} encType="multipart/form-data" >
-          <div className="mb-3">
-            <label htmlFor="disabledSelect" className="form-label">Chon phuong thuc thanh toan</label>
-            <select id="disabledSelect" className="form-select" name='categoryId' required onChange={(e) => setPay(e.target.value)}>
+        <button type="submit" className="btn btn-primary" onClick={() => handlePost()}>
+          Đặt hàng
+        </button>
 
-              {convertedPayment.map((option) => (
-                <option value={option.label}>{option.value}</option>
-              ))}
-            </select>
-          </div> */}
-          <button type='submit' className='btn btn-primary' disabled={disabled} onClick={() => handldePost()}>Đặt hàng</button>
-      
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom"
 export const gettAllProduct = async (id,dispatch) => {
     dispatch(getProductStart())
     try {
-        const res = await axios.get(`http://localhost:8080/api/v1/shop/${id}/product`)
+        const res = await axios.get(`http://192.168.43.199:8443/api/v1/shop/${id}/product`)
         
         dispatch(getProductSuccess(res.data))
     } catch (error) {
@@ -18,7 +18,7 @@ export const gettAllProduct = async (id,dispatch) => {
 export const gettAllProductPagination = async (dispatch) => {
     dispatch(getProductStart())
     try {
-        const res = await axios.get(`http://localhost:8080/api/v1/product/getAllProduct`)
+        const res = await axios.get(`http://192.168.43.199:8443/api/v1/product/getAllProduct`)
         // debugger
         dispatch(getProductSuccess(res.data))
     } catch (error) {
@@ -30,7 +30,7 @@ export const gettAllProductPagination = async (dispatch) => {
 export const postProduct = async (formData, newPro, dispatch, navigate) => {
     dispatch(postProductStart())
     try {
-        const res = await axios.post("http://localhost:8080/api/v1/product/insert", formData, {
+        const res = await axios.post("http://192.168.43.199:8443/api/v1/product/insert", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
@@ -50,7 +50,7 @@ export const postProductImage = async (id,formData, dispatch, navigate) => {
     try {
         const boundary = Math.random().toString();
         const res = await axios.post(
-            `http://localhost:8080/api/v1/product/insertImage`,
+            `http://192.168.43.199:8443/api/v1/product/insertImage`,
             formData,
             {
                 headers: {
@@ -73,7 +73,7 @@ export const editProduct = async (id, formData, dispatch, navigate) => {
     try {
         const boundary = Math.random().toString()
         const res = await axios.put(
-            `http://localhost:8080/api/v1/product/${id}`,
+            `http://192.168.43.199:8443/api/v1/product/${id}`,
             formData,
             {
                 headers: {
@@ -91,7 +91,7 @@ export const editProduct = async (id, formData, dispatch, navigate) => {
 export const getIdProduct = async (id, dispatch) => {
     dispatch(getIdProductStart())
     try {
-        const res = await axios.get(`http://localhost:8080/api/v1/product/${id}`)
+        const res = await axios.get(`http://192.168.43.199:8443/api/v1/product/${id}`)
 
         dispatch(getIdProductSuccess(res.data))
 
@@ -103,7 +103,7 @@ export const getIdProduct = async (id, dispatch) => {
 export const deleteProduct = async (id, dispatch) => {
     dispatch(deleteProductStart())
     try {
-        const res = await axios.delete(`http://localhost:8080/api/v1/product/${id}`)
+        const res = await axios.delete(`http://192.168.43.199:8443/api/v1/product/${id}`)
 
         dispatch(deleteProductSuccess(res.data))
         gettAllProduct(dispatch)
@@ -116,7 +116,7 @@ export const deleteProduct = async (id, dispatch) => {
 export const deleteImage = async (id, dispatch) => {
     dispatch(deleteProductStart())
     try {
-        const res = await axios.delete(`http://localhost:8080/api/v1/product/image/${id}`)
+        const res = await axios.delete(`http://192.168.43.199:8443/api/v1/product/image/${id}`)
 
         dispatch(deleteProductSuccess(res.data))
         gettAllProduct(dispatch)

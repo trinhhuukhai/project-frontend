@@ -18,7 +18,7 @@ function AddAccount() {
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
-    const [role, setRole] = useState('');
+    const [role, setRole] = useState(0);
 
 
 
@@ -42,7 +42,7 @@ function AddAccount() {
 
         addAccount(newAccount, dispatch, navigate)
 
-
+            debugger
     };
     
     return (
@@ -58,7 +58,7 @@ function AddAccount() {
                             </div>
                             <div className='mb-3'>
                                 <label htmlFor='password' className='form-label'>Mật khẩu</label>
-                                <input type={"text"} className="form-control" placeholder='Mật khẩu' name='password' required onChange={(e) => setPassword(e.target.value)} />
+                                <input type={"password"} className="form-control" placeholder='Mật khẩu' name='password' required onChange={(e) => setPassword(e.target.value)} />
                             </div>
                             <div className='mb-3'>
                                 <label htmlFor='name' className='form-label'>Họ tên</label>
